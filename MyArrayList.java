@@ -17,6 +17,28 @@ public class MyArrayList<E> implements MyList<E> {
            add(objects[i]); // Warning: don't use super(objects)!
     }
 
+    /** Create a new larger array, double the current size + 1 */
+    //PRE: none (this is a helper method)
+    //POST: checks if the size of the array is at capacity
+    //      if so, it doubles the size of the array & copies data to new array   
+    private void ensureCapacity() {
+        //if the current size exceeds the data size
+        if (size >= data.length) {
+            E[] newData = (E[])(new Object[size * 2 + 1]);
+            System.arraycopy(data, 0, newData, 0, size);
+            data = newData;
+        }
+    }
+    
+    //verify the index (helper method)
+    //PRE: none
+    //POST:throw out of bounds if index is invalid 
+    private void checkIndex(int index) {
+        if (index < 0 || index >= size)
+            throw new IndexOutOfBoundsException
+                ("index " + index + " out of bounds");
+    }
+
     @Override 
     //Add a new element at the specified index   
     //PRE: Accepts the index & value to add
@@ -30,18 +52,16 @@ public class MyArrayList<E> implements MyList<E> {
 
     }
 
-    /** Create a new larger array, double the current size + 1 */
-    //PRE: none (this is a helper method)
-    //POST: checks if the size of the array is at capacity
-    //      if so, it doubles the size of the array & copies data to new array   
-    private void ensureCapacity() {
-        //if the current size exceeds the data size
-        if (size >= data.length) {
-            E[] newData = (E[])(new Object[size * 2 + 1]);
-            System.arraycopy(data, 0, newData, 0, size);
-            data = newData;
-        }
+    @Override
+    //PRE: Accepts a list of items 'c'
+    //POST Adds all the elements in the collection c 
+    //     returns true if data was updated 
+
+    public boolean addAll(Collection<? extends E> c) {
+        System.out.println("Need to write: addAll");
+        return false;
     }
+
 
     @Override 
     //Clear the list
@@ -52,6 +72,7 @@ public class MyArrayList<E> implements MyList<E> {
         data = (E[])new Object[INITIAL_CAPACITY];
         size = 0;
     }
+
 
     @Override 
     //Return true if this list contains the element 
@@ -65,6 +86,16 @@ public class MyArrayList<E> implements MyList<E> {
         return false;
     }
 
+    @Override
+    //Returns true if the collection contains all the elements in c.
+    //PRE: accepts a generic collection of objects
+    //POST:if these are the same, return true
+    //     else returm false  
+    public boolean containsAll(Collection<?> c) {
+        System.out.println("Need to write: containsAll");
+        return false;
+    }
+
     @Override  
     //Retrieve the element at the index position
     //PRE: accepts the index
@@ -73,24 +104,6 @@ public class MyArrayList<E> implements MyList<E> {
     public E get(int index) {
         checkIndex(index);
         return data[index];
-    }
-
-    //verify the index (helper method)
-    //PRE: none
-    //POST:throw out of bounds if index is invalid 
-    private void checkIndex(int index) {
-        if (index < 0 || index >= size)
-            throw new IndexOutOfBoundsException
-                ("index " + index + " out of bounds");
-    }
-
-
-    @Override
-    //get the size of the array
-    //PRE: none
-    //POST:return the size of the array
-    public int size(){
-        return size;
     }
 
     @Override 
@@ -127,6 +140,23 @@ public class MyArrayList<E> implements MyList<E> {
         return null;
     }
 
+    @Override
+    //Removes all the elements in c from this collection.
+    //PRE: Accepts a list of items 'c'
+    //POST Adds all the elements in the collection c 
+    //     returns true if data was updated 
+    public boolean removeAll(Collection<?> c) {
+        System.out.println("Need to write: removeAll");
+        return false;
+    }
+
+    @Override
+    //Retains the elements that are both in c and in this collection.
+    public boolean retainAll(Collection<?> c) {
+        // not implementing at this time
+        return false;
+    }
+
     @Override 
     //Replace the element at the specified position with new element
     //PRE: accepts the index value & new element
@@ -136,6 +166,30 @@ public class MyArrayList<E> implements MyList<E> {
     //     returns element
     public E set(int index, E e) {
         System.out.println("Need to write: set");
+        return null;
+    }
+    
+    @Override
+    //get the size of the array
+    //PRE: none
+    //POST:return the size of the array
+    public int size(){
+        return size;
+    }
+
+    @Override
+    //Returns an array of Object for the elements in this collection.
+    //PRE: none
+    //POST: creates an array of objects, 
+    //      copies elements from array to new array & returns new array
+    public Object[] toArray() {
+        System.out.println("Need to write: toArray");
+        return null;
+    } 
+
+    @Override
+    public <T> T[] toArray(T[] array) {
+        // not implementing at this time
         return null;
     }
 
@@ -163,61 +217,6 @@ public class MyArrayList<E> implements MyList<E> {
             System.arraycopy(data, 0, newData, 0, size);
             data = newData;
         } // If size == capacity, no need to trim
-    }
-
-    @Override
-    //Returns an array of Object for the elements in this collection.
-    //PRE: none
-    //POST: creates an array of objects, 
-    //      copies elements from array to new array & returns new array
-    public Object[] toArray() {
-        System.out.println("Need to write: toArray");
-        return null;
-    }
-
-    
-    @Override
-    //PRE: Accepts a list of items 'c'
-    //POST Adds all the elements in the collection c 
-    //     returns true if data was updated 
-
-    public boolean addAll(Collection<? extends E> c) {
-        System.out.println("Need to write: addAll");
-        return false;
-    }
-    
-    @Override
-    //Returns true if the collection contains all the elements in c.
-    //PRE: accepts a generic collection of objects
-    //POST:if these are the same, return true
-    //     else returm false  
-    public boolean containsAll(Collection<?> c) {
-        System.out.println("Need to write: containsAll");
-        return false;
-    }
-
-    @Override
-    //Removes all the elements in c from this collection.
-    //PRE: Accepts a list of items 'c'
-    //POST Adds all the elements in the collection c 
-    //     returns true if data was updated 
-    public boolean removeAll(Collection<?> c) {
-        System.out.println("Need to write: removeAll");
-        return false;
-    }
-
-
-    @Override
-    public <T> T[] toArray(T[] array) {
-        // not implementing at this time
-        return null;
-    }
-
-    @Override
-    //Retains the elements that are both in c and in this collection.
-    public boolean retainAll(Collection<?> c) {
-        // not implementing at this time
-        return false;
     }
     
     @Override 
